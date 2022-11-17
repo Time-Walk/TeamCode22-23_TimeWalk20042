@@ -3,15 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="Тест колор драйв", group="")
-@Disabled
-public class AutoTestColorDrive extends LinearOpMode {
-
-
+@Autonomous(name="КР-СПРВ: Терминал > Парковка по цвету", group="red")
+public class RedTerminalColorParking extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -24,21 +20,21 @@ public class AutoTestColorDrive extends LinearOpMode {
             R.GrI = 0;
             R.CnI = 0;
 
-        telemetry.addData("State", "Detecking");
-        telemetry.update();
+            telemetry.addData("State", "Detecking");
+            telemetry.update();
 
-        for (int i = 250; i < 390; i = i + 10) {
-            for (int l = 150; l < 210; l = l + 10) {
-                int Red = Color.red(R.getImage().getPixel(i, l));
-                int Green = Color.green(R.getImage().getPixel(i, l));
-                int Blue = Color.blue(R.getImage().getPixel(i, l));
-                R.analyze(Red, Green, Blue);
-                telemetry.addData("i", i);
-                telemetry.addData("l", l);
-                telemetry.update();
+            for (int i = 250; i < 390; i = i + 10) {
+                for (int l = 150; l < 210; l = l + 10) {
+                    int Red = Color.red(R.getImage().getPixel(i, l));
+                    int Green = Color.green(R.getImage().getPixel(i, l));
+                    int Blue = Color.blue(R.getImage().getPixel(i, l));
+                    R.analyze(Red, Green, Blue);
+                    telemetry.addData("i", i);
+                    telemetry.addData("l", l);
+                    telemetry.update();
+                }
             }
-        }
-        telemetry.addData("Exit from for.", R.MgI);
+            telemetry.addData("Exit from for.", R.MgI);
         }
 
 
@@ -83,11 +79,58 @@ public class AutoTestColorDrive extends LinearOpMode {
         telemetry.addData("Gr count", R.GrI);
         telemetry.addData("Cn count", R.CnI);
         telemetry.update();
-        R.delay(1000);
-        //R.RyanGosling();
-        R.delay(1500);
-        //R.doColor(s);
-        R.delay(10000);
+        R.delay(100);
+
+
+        R.setMtPower(0.3, 0.3, -0.3, -0.3);
+        R.delay(650);
+        R.setMtPower(0, 0, 0, 0);
+        R.delay(150);
+        R.rotate(90);
+        R.delay(150);
+        R.setMtPower(0.6, 0.6, -0.6, -0.6);
+        R.delay(550);
+        R.setMtPower(0, 0, 0, 0);
+        R.KL.setPosition(0.3);
+        R.delay(500);
+        R.setMtPower(-0.4, -0.4, 0.4, 0.4);
+        R.delay(450);
+        R.setMtPower(0, 0, 0, 0);
+        R.KL.setPosition(0.1);
+        R.delay(150);
+        R.setMtPower(-0.6, -0.6, 0.6, 0.6);
+        R.delay(550);
+        R.setMtPower(0, 0, 0, 0);
+        R.delay(150);
+        R.rotate(-90);
+        R.delay(150);
+
+        if (s == "Ns") {
+            R.setMtPower(0.2, 0.2, -0.2, -0.2);
+            R.delay(400);
+            R.setMtPower(0.6, -0.6, 0.6, -0.6);
+            R.delay(650);
+            R.setMtPower(0, 0, 0, 0);
+        }
+        if (s == "Cn") {
+            R.go(50);
+            R.delay(150);
+            R.setMtPower(0.6, 0.6, -0.6, -0.6);
+            R.delay(500);
+            R.setMtPower(0, 0, 0, 0);
+        }
+        if (s == "Gr") {
+            R.setMtPower(0.6, 0.6, -0.6, -0.6);
+            R.delay(800);
+            R.setMtPower(0, 0, 0, 0);
+        }
+        if (s == "Mg") {
+            R.setMtPower(0, 0.6, -0.6, 0);
+            R.delay(600);
+            R.setMtPower(0.6, 0.6, -0.6, -0.6);
+            R.delay(500);
+            R.setMtPower(0, 0, 0, 0);
+        }
 
     }
 

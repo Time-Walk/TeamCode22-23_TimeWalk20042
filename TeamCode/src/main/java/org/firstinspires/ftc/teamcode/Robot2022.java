@@ -310,54 +310,32 @@ public class Robot2022 extends Robot {
             boolean hold = false;
             double Power = 0;
             while (L.opModeIsActive() && !L.isStopRequested()) {
-                LT.setPower((gamepad2.left_stick_y/-2)+Power); //Управление лифтом стиком
+                LT.setPower((gamepad2.left_stick_y/-1.8)+Power); //Управление лифтом стиком
                 if (gamepad2.y) { //Поднять до конца
                     LT.setPower(0.9);  //начальное ускорение
-                    delay(250);
+                    delay(200);
                     LT.setPower(0.45);    //спокойная скорость
-                    delay(500);
+                    delay(350);
                     LT.setPower(0);      //стоп
+                    Power = 0.14;
+                    hold = true;
                 }
                 if (gamepad2.a) {
                     if ( hold ) {
                         Power = 0;
                         hold = false;
-                        delay(500);
+                        delay(300);
                     }
                     else {
-                        Power = 0.125;
+                        Power = 0.14;
                         hold = true;
-                        delay(500);
+                        delay(300);
                     }
                 }
             }
         }
     };
 
-    void RyanGosling() {
-        setMtPower(-0.5, 0.5, -0.5, 0.5);
-        delay(500);
-        setMtPower(0, 0, 0, 0);
-    }
-
-    void doColor(String s) {
-        if (s == "Mg") {
-            go(100);
-        }
-        if (s == "Gr") {
-            setMtPower(0.8, 0.8, -0.8, 0.8);
-            delay(500);
-            setMtPower(0, 0, 0, 0);
-        }
-        if (s == "Cn") {
-            go(-100);
-        }
-        if (s == "Ns") {
-            setMtPower(0.5, -0.5, 0.5, -0.5);
-            delay(500);
-            setMtPower(0, 0, 0, 0);
-        }
-    }
 
     void setMtPower(double lf, double lb, double rf, double rb) {
         LF.setPower(lf);
@@ -372,7 +350,7 @@ public class Robot2022 extends Robot {
     void analyze(int red, int green, int blue) {
         boolean Mg = ConusRq(220, 70, 120, 0.2, red, green, blue);
         boolean Gr = ConusRq(50, 120, 50, 0.3, red, green, blue);
-        boolean Cn = ConusRq(50, 130, 140, 0.2, red, green, blue);
+        boolean Cn = ConusRq(50, 130, 140, 0.15, red, green, blue);
         if (Mg) {MgI=MgI+1; telemetry.addData("Mg detecked! Total count", MgI); }
         if (Gr) {GrI=GrI+1; telemetry.addData("Gr detecked! Total count", GrI); }
         if (Cn) {CnI=CnI+1; telemetry.addData("Cn detecked! Total count", CnI); }
@@ -383,6 +361,6 @@ public class Robot2022 extends Robot {
         if (gamepad2.left_bumper ) {
             KL.setPosition(0.1); }
         if (gamepad2.right_bumper) {
-            KL.setPosition(0.9); }
+            KL.setPosition(0.3); }
     }
 }

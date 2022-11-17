@@ -17,7 +17,6 @@ public class teleOpo extends LinearOpMode {
         R.gamepad_init(gamepad1,gamepad2);
         //R.KL.setPosition(R.servoPos);
         waitForStart();
-        R.LB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         R.liftControllerT.start();  //Запуск работы лифта
         while (!isStopRequested()){
             R.wheelbase();   //Передвижение колесной базы
