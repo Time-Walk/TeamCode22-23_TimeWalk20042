@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="КР-СПРВ: Парковка по цвету", group="red")
+@Autonomous(name="КР-СЛВ: Парковка по цвету", group="red")
 public class RedColorParking extends LinearOpMode {
 
     @Override
@@ -84,7 +84,7 @@ public class RedColorParking extends LinearOpMode {
         if (s == "Ns") {
             R.setMtPower(0.2, 0.2, -0.2, -0.2);
             R.delay(400);
-            R.setMtPower(0.6, -0.6, 0.6, -0.6);
+            R.setMtPower(-0.6, 0.6, -0.6, 0.6);
             R.delay(650);
             R.setMtPower(0, 0, 0, 0);
         }

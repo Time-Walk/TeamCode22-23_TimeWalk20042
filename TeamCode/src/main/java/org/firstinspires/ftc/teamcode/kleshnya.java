@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="Закрыть-Открыть клешню", group="")
+@Autonomous(name="ПО ПРИКАЗУ ГЕНЕРАЛА ГАВСА", group="")
 //@Disable
 public class kleshnya extends LinearOpMode {
     @Override

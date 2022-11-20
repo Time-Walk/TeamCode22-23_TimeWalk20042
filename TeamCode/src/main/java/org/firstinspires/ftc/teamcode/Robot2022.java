@@ -232,10 +232,10 @@ public class Robot2022 extends Robot {
 
             double Er = degrees - (getAngle());
 
-            double kp = 0.55;
+            double kp = 0.6;
             double P = kp * Er / Er0 * pw;
 
-            double kd = 0.25;
+            double kd = 0.2;
             double ErD = Er - ErLast;
             double D = kd * ErD * (1/Er);
 
@@ -359,8 +359,8 @@ public class Robot2022 extends Robot {
     //double servoPos=0.1;
     void servoController() {
         if (gamepad2.left_bumper ) {
-            KL.setPosition(0.1); }
+            KL.setPosition(0.05); }
         if (gamepad2.right_bumper) {
-            KL.setPosition(0.3); }
+            KL.setPosition(0.25); }
     }
 }

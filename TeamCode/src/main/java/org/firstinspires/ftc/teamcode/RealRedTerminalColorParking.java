@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="СН-СПРВ: Терминал > Парковка по цвету", group="blue")
-public class RedTerminalColorParking extends LinearOpMode {
+@Autonomous(name="КР-СЛ: Терминал > Парковка по цвету", group="red")
+public class RealRedTerminalColorParking extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -87,7 +87,7 @@ public class RedTerminalColorParking extends LinearOpMode {
         R.delay(350);
         R.setMtPower(0, 0, 0, 0);
         R.delay(150);
-        R.rotate(90);
+        R.rotate(-90);
         R.delay(150);
         R.setMtPower(0.6, 0.6, -0.6, -0.6);
         R.delay(550);
@@ -103,14 +103,14 @@ public class RedTerminalColorParking extends LinearOpMode {
         R.delay(250);
         R.setMtPower(0, 0, 0, 0);
         R.delay(150);
-        R.rotate(-90);
+        R.rotate(90);
         R.setMtPower(-0.3, -0.3, 0.3, 0.3);
         R.delay(450);
         R.setMtPower(0, 0, 0, 0);
         R.delay(150);
 
         if (s == "Ns") {
-            R.setMtPower(0.6, -0.6, 0.6, -0.6);
+            R.setMtPower(-0.6, 0.6, -0.6, 0.6);
             R.delay(650);
             R.setMtPower(0, 0, 0, 0);
         }

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="КР-СЛВ: Парковка по цвету", group="red")
+@Autonomous(name="КР-СПРВ: Парковка по цвету", group="red")
 public class RedColorParkingLeft extends LinearOpMode {
 
     @Override
