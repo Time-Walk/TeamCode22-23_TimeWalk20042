@@ -14,8 +14,9 @@ public class BlueColorParkingLeft extends LinearOpMode {
         Robot2022 R = new Robot2022();
         R.initFields(telemetry, this, hardwareMap);
         R.init();
+        R.KL.setPosition(0.3);
 
-        while ( !isStarted() ) {
+        while (!isStarted()) {
             R.MgI = 0;
             R.GrI = 0;
             R.CnI = 0;
@@ -39,6 +40,7 @@ public class BlueColorParkingLeft extends LinearOpMode {
 
 
         waitForStart();
+        R.KL.setPosition(0.1);
 
         //okay, let's go!
 
@@ -87,7 +89,7 @@ public class BlueColorParkingLeft extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Cn") {
-            R.go(50);
+            R.go(170);
             R.delay(150);
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
             R.delay(500);
@@ -99,13 +101,16 @@ public class BlueColorParkingLeft extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Mg") {
-            R.setMtPower(0, 0.6, -0.6, 0);
-            R.delay(600);
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(500);
+            R.delay(800);
             R.setMtPower(0, 0, 0, 0);
+            R.rotate(90);
+            R.setMtPower(-0.6, -0.6, 0.6, 0.6);
+            R.delay(750);
+            R.setMtPower(0, 0, 0, 0);
+            R.KL.setPosition(0.3);
         }
 
-    }
+    }}
 
-}
+

@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="СН-СПРВ: Терминал > Парковка по цвету", group="blue")
+@Autonomous(name="СН-СПРВ: Терминал > Парковка по цвету", group="blue") //Не обращайте внимания на название автономов в программе, и в Driver Station
 public class RedTerminalColorParking extends LinearOpMode {
 
     @Override
@@ -14,6 +14,7 @@ public class RedTerminalColorParking extends LinearOpMode {
         Robot2022 R = new Robot2022();
         R.initFields(telemetry, this, hardwareMap);
         R.init();
+        R.KL.setPosition(0.3);
 
         while ( !isStarted() ) {
             R.MgI = 0;
@@ -39,6 +40,7 @@ public class RedTerminalColorParking extends LinearOpMode {
 
 
         waitForStart();
+        R.KL.setPosition(0.1);
 
         //okay, let's go!
 
@@ -134,7 +136,7 @@ public class RedTerminalColorParking extends LinearOpMode {
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
             R.delay(750);
             R.setMtPower(0, 0, 0, 0);
-            R.KL.setPosition(0.4);
+            R.KL.setPosition(0.3);
         }
 
     }

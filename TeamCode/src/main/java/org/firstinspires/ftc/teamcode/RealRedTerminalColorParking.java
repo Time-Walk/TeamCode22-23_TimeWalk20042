@@ -14,6 +14,7 @@ public class RealRedTerminalColorParking extends LinearOpMode {
         Robot2022 R = new Robot2022();
         R.initFields(telemetry, this, hardwareMap);
         R.init();
+        R.KL.setPosition(0.3);
 
         while ( !isStarted() ) {
             R.MgI = 0;
@@ -39,6 +40,7 @@ public class RealRedTerminalColorParking extends LinearOpMode {
 
 
         waitForStart();
+        R.KL.setPosition(0.1);
 
         //okay, let's go!
 
@@ -115,7 +117,7 @@ public class RealRedTerminalColorParking extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Cn") {
-            R.go(170);
+            R.go(170); //asd asd asd asd asd (ads asd asd asd) )asd asd asd( (asd asd) asd
             R.delay(150);
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
             R.delay(500);
@@ -134,7 +136,7 @@ public class RealRedTerminalColorParking extends LinearOpMode {
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
             R.delay(750);
             R.setMtPower(0, 0, 0, 0);
-            R.KL.setPosition(0.4);
+            R.KL.setPosition(0.3);
         }
 
     }

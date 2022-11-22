@@ -295,9 +295,6 @@ public class Robot2022 extends Robot {
         double rb = gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
         double lf = -gamepad1.left_stick_y+gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
         double lb = -gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
-        telemetry.addData("stick x", gamepad1.left_stick_x);
-        telemetry.addData("stick y", gamepad1.left_stick_y);
-        telemetry.update();
         RF.setPower(rf);
         RB.setPower(rb);
         LF.setPower(lf);
@@ -310,11 +307,13 @@ public class Robot2022 extends Robot {
             boolean hold = false;
             double Power = 0;
             while (L.opModeIsActive() && !L.isStopRequested()) {
-                LT.setPower((gamepad2.left_stick_y/-1.8)+Power); //Управление лифтом стиком
+                telemetry.addData("y", gamepad2.left_stick_y);
+                telemetry.update();
+                LT.setPower((gamepad2.right_stick_y/-1.7)+Power); //Управление лифтом стиком
                 if (gamepad2.y) { //Поднять до конца
-                    LT.setPower(0.9);  //начальное ускорение
+                    LT.setPower(0.75);  //начальное ускорение
                     delay(200);
-                    LT.setPower(0.45);    //спокойная скорость
+                    LT.setPower(0.4);    //спокойная скорость
                     delay(350);
                     LT.setPower(0);      //стоп
                     Power = 0.14;
