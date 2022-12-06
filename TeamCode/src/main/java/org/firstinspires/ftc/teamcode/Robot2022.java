@@ -130,6 +130,136 @@ public class Robot2022 extends Robot {
         return false;
     }
 
+    void Katet(double cm, int direction) { //direction: 1 - forward, 2 - right, 3 - backward, 4 - left
+        double lbs = 1; // lb signum
+        double rbs = 1;
+        double lfs = 1;
+        double rfs = 1;
+        double kc = 1;
+        if (direction == 1) {
+            rbs = -1;
+            rfs = -1;
+        }
+        if (direction == 2) {
+            lbs = -1;
+            rbs = -1;
+        }
+        if (direction == 3) {
+            lbs = -1;
+            lfs = -1;
+            kc = 2;
+        }
+        if (direction == 4) {
+            lfs = -1;
+            rfs = -1;
+            kc = 2;
+        }
+        double pw = 1;
+        double ccx = ((400 * cm) / 32.97)*kc;
+        double cc = ccx/Math.sqrt(2);
+        double Er0 = cc;
+        double ErLast = 0;
+        double D = 1;
+        double startAngle = getAngle();
+        LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while ( ( Math.abs(D) > 0.1 ||  Math.abs(cc) - Math.abs(LF.getCurrentPosition()) > 10*Math.signum(cc)) && L.opModeIsActive()) {
+
+            double Er = Math.abs(cc) - Math.abs(LF.getCurrentPosition());
+
+            double kp = 0.9;
+            double P = kp * Er / Er0 * pw ;
+
+            double kd = 0.2;
+            double ErD = Er - ErLast;
+            D = kd * ErD * (1 / Er);
+
+            if (Math.signum(D) > Math.signum(P)) {  D=P; }
+
+            double kr = 0.2*Math.signum(cc);
+            double Rele = kr * Math.signum(Er);
+
+            ErLast = Er;
+
+            double lbr = 0; // lb rotate
+            double lfr = 0;
+            double rfr = 0;
+            double rbr = 0;
+            double rotP=0;
+
+            if ( Math.abs(startAngle - getAngle()) > 1 ) {
+                double rotkp = 0.05;
+                rotP = -(rotkp * (startAngle - getAngle()));
+                if ( direction == 1 ) {
+                    rfr += rotP;
+                    rbr += rotP;
+                }
+                if ( direction == 2 ) {
+                    lbr += rotP;
+                    rbr += rotP;
+                }
+                if ( direction == 3 ) {
+                    lfr += rotP;
+                    lbr += rotP;
+                }
+                if ( direction == 4 ) {
+                    rfr += rotP;
+                    lfr += rotP;
+                }
+            }
+
+
+            double pwf = (pw * (P+D+Rele))*Math.signum(Er); //Регулятор
+
+            if ( rotP > pwf ) { rotP = pwf*0.6; }
+
+            //telemetry.addData("currPosition", LF.getCurrentPosition());
+            //telemetry.addData("cc", cc);
+            //telemetry.addData("Err", Er);
+            //telemetry.addData("cond1", cc - LF.getCurrentPosition());
+            //telemetry.addData("cond2", 10*Math.signum(cc));
+            //telemetry.addData("pwf", pwf);
+            //telemetry.addData("D", D);
+            //telemetry.update();
+
+            setMtPower(pwf*lfs+lfr, pwf*lbs+lbr, pwf*rfs+rfr, pwf*rbs+rbr);
+
+
+            /*telemetry.addData("cc", cc);
+            telemetry.addData("Er0", Er0);
+            telemetry.addData("Er", Er);
+            telemetry.addData("getCurrentPosition", LB.getCurrentPosition());
+            telemetry.addData("kp", kp);
+            telemetry.addData("Rele", Rele);
+            telemetry.addData("D", D);
+            telemetry.addData("pw", pw);
+            telemetry.addData("pwf", pwf);
+            telemetry.addData("rotEr", startAngle-getAngle());
+            telemetry.addData("lfr", lfr);
+            telemetry.addData("lbr", lbr);
+            telemetry.addData("rfr", rfr);
+            telemetry.addData("rbr", rbr);
+            telemetry.addData("rotP", rotP);
+            telemetry.update();*/
+
+        }
+
+        delay(500);
+
+        while ( Math.abs(startAngle - getAngle()) > 1  && L.opModeIsActive()) {
+
+            double kp = 0.03;
+            double P = -(kp * (startAngle - getAngle()));
+
+            setMtPower(P, P, P, P);
+
+        }
+
+        setMtPower(0, 0, 0, 0);
+
+        delay(500);
+    }
+
     void go(double cm) { //
         double pw = 1;
         double cc = (400 * cm) / 32.97;
@@ -153,7 +283,7 @@ public class Robot2022 extends Robot {
             double Er = Math.abs(cc) - Math.abs(LF.getCurrentPosition());
 
             double kp = 0.9;
-            double P = kp * Er / Er0 * pw ;
+            double P = kp * Er / Er0 * pw;
 
             double kd = 0.15;
             double ErD = Er - ErLast;
@@ -165,6 +295,7 @@ public class Robot2022 extends Robot {
             double Rele = kr * Math.signum(Er);
 
             ErLast = Er;
+
 
 
             double pwf = (pw * (P+D+Rele))*Math.signum(Er); //Регулятор
@@ -291,10 +422,10 @@ public class Robot2022 extends Robot {
     }
 
     void wheelbase() {
-        double rf = gamepad1.left_stick_y+gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
-        double rb = gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
-        double lf = -gamepad1.left_stick_y+gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
-        double lb = -gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6);
+        double rf = gamepad1.left_stick_y+gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6)-(gamepad1.left_trigger*0.6)+(gamepad1.right_trigger*0.6);
+        double rb = gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6)-(gamepad1.left_trigger*0.6)+(gamepad1.right_trigger*0.6);
+        double lf = -gamepad1.left_stick_y+gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6)-(gamepad1.left_trigger*0.6)+(gamepad1.right_trigger*0.6);
+        double lb = -gamepad1.left_stick_y-gamepad1.left_stick_x+(gamepad1.right_stick_x*0.6)-(gamepad1.left_trigger*0.6)+(gamepad1.right_trigger*0.6);
         RF.setPower(rf);
         RB.setPower(rb);
         LF.setPower(lf);

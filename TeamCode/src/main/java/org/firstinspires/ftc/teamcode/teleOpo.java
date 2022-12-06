@@ -16,6 +16,9 @@ public class teleOpo extends LinearOpMode {
         R.init();
         R.gamepad_init(gamepad1,gamepad2);
         //R.KL.setPosition(R.servoPos);
+        while ( gamepad1.left_bumper && gamepad2.right_bumper ) { telemetry.addData("State", "Робот заблокирован"); telemetry.update(); }
+        telemetry.addData("ROBOT UNLOCKED!", "!");
+        telemetry.update();
         waitForStart();
         R.liftControllerT.start();  //Запуск работы лифта
         while (!isStopRequested()){

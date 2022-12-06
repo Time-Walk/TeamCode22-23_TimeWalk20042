@@ -17,8 +17,12 @@ public class AUTOFORTEST extends LinearOpMode {
         waitForStart();
 
         //okay, let's go!
-        R.setMtPower(0.5, 0.5, -0.5, -0.5);
-        R.delay(10000);
+        R.Katet(50, 1);
+        R.Katet(100, 3);
+        R.Katet(50, 1);
+        R.Katet(50, 2);
+        R.Katet(100, 4);
+        R.Katet(50, 2);
 
     }
 
