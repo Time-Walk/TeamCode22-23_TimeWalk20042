@@ -147,12 +147,12 @@ public class Robot2022 extends Robot {
         if (direction == 3) {
             lbs = -1;
             lfs = -1;
-            kc = 2;
+            //kc = 2;
         }
         if (direction == 4) {
             lfs = -1;
             rfs = -1;
-            kc = 2;
+            //kc = 2;
         }
         double pw = 1;
         double ccx = ((400 * cm) / 32.97)*kc;
@@ -167,7 +167,7 @@ public class Robot2022 extends Robot {
 
             double Er = Math.abs(cc) - Math.abs(LF.getCurrentPosition());
 
-            double kp = 0.9;
+            double kp = 0.8;
             double P = kp * Er / Er0 * pw ;
 
             double kd = 0.2;
@@ -185,10 +185,10 @@ public class Robot2022 extends Robot {
             double lfr = 0;
             double rfr = 0;
             double rbr = 0;
-            double rotP=0;
+            double rotP =0;
 
             if ( Math.abs(startAngle - getAngle()) > 1 ) {
-                double rotkp = 0.05;
+                double rotkp = 0.03;
                 rotP = -(rotkp * (startAngle - getAngle()));
                 if ( direction == 1 ) {
                     rfr += rotP;
@@ -248,7 +248,135 @@ public class Robot2022 extends Robot {
 
         while ( Math.abs(startAngle - getAngle()) > 1  && L.opModeIsActive()) {
 
-            double kp = 0.03;
+            double kp = 0.02;
+            double P = -(kp * (startAngle - getAngle()));
+
+            setMtPower(P, P, P, P);
+
+        }
+
+        setMtPower(0, 0, 0, 0);
+
+        delay(500);
+    }
+
+    void katetPlus(double cm, int direction, double kp, double kd, boolean isRot) { //direction: 1 - forward, 2 - right, 3 - backward, 4 - left
+        double lbs = 1; // lb signum
+        double rbs = 1;
+        double lfs = 1;
+        double rfs = 1;
+        double kc = 1;
+        if (direction == 1) {
+            rbs = -1;
+            rfs = -1;
+        }
+        if (direction == 2) {
+            lbs = -1;
+            rbs = -1;
+        }
+        if (direction == 3) {
+            lbs = -1;
+            lfs = -1;
+            //kc = 2;
+        }
+        if (direction == 4) {
+            lfs = -1;
+            rfs = -1;
+            //kc = 2;
+        }
+        double pw = 1;
+        double ccx = ((400 * cm) / 32.97)*kc;
+        double cc = ccx/Math.sqrt(2);
+        double Er0 = cc;
+        double ErLast = 0;
+        double D = 1;
+        double startAngle = getAngle();
+        LF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        while ( ( Math.abs(D) > 0.1 ||  Math.abs(cc) - Math.abs(LF.getCurrentPosition()) > 10*Math.signum(cc)) && L.opModeIsActive()) {
+
+            double Er = Math.abs(cc) - Math.abs(LF.getCurrentPosition());
+
+            double P = kp * Er / Er0 * pw ;
+
+            double ErD = Er - ErLast;
+            D = kd * ErD * (1 / Er);
+
+            if (Math.signum(D) > Math.signum(P)) {  D=P; }
+
+            double kr = 0.2*Math.signum(cc);
+            double Rele = kr * Math.signum(Er);
+
+            ErLast = Er;
+
+            double lbr = 0; // lb rotate
+            double lfr = 0;
+            double rfr = 0;
+            double rbr = 0;
+            double rotP =0;
+
+            if ( Math.abs(startAngle - getAngle()) > 1 && isRot ) {
+                double rotkp = 0.03;
+                rotP = -(rotkp * (startAngle - getAngle()));
+                if ( direction == 1 ) {
+                    rfr += rotP;
+                    rbr += rotP;
+                }
+                if ( direction == 2 ) {
+                    lbr += rotP;
+                    rbr += rotP;
+                }
+                if ( direction == 3 ) {
+                    lfr += rotP;
+                    lbr += rotP;
+                }
+                if ( direction == 4 ) {
+                    rfr += rotP;
+                    lfr += rotP;
+                }
+            }
+
+
+            double pwf = (pw * (P+D+Rele))*Math.signum(Er); //Регулятор
+
+            if ( rotP > pwf ) { rotP = pwf*0.6; }
+
+            //telemetry.addData("currPosition", LF.getCurrentPosition());
+            //telemetry.addData("cc", cc);
+            //telemetry.addData("Err", Er);
+            //telemetry.addData("cond1", cc - LF.getCurrentPosition());
+            //telemetry.addData("cond2", 10*Math.signum(cc));
+            //telemetry.addData("pwf", pwf);
+            //telemetry.addData("D", D);
+            //telemetry.update();
+
+            setMtPower(pwf*lfs+lfr, pwf*lbs+lbr, pwf*rfs+rfr, pwf*rbs+rbr);
+
+
+            /*telemetry.addData("cc", cc);
+            telemetry.addData("Er0", Er0);
+            telemetry.addData("Er", Er);
+            telemetry.addData("getCurrentPosition", LB.getCurrentPosition());
+            telemetry.addData("kp", kp);
+            telemetry.addData("Rele", Rele);
+            telemetry.addData("D", D);
+            telemetry.addData("pw", pw);
+            telemetry.addData("pwf", pwf);
+            telemetry.addData("rotEr", startAngle-getAngle());
+            telemetry.addData("lfr", lfr);
+            telemetry.addData("lbr", lbr);
+            telemetry.addData("rfr", rfr);
+            telemetry.addData("rbr", rbr);
+            telemetry.addData("rotP", rotP);
+            telemetry.update();*/
+
+        }
+
+        delay(500);
+
+        while ( Math.abs(startAngle - getAngle()) > 1  && L.opModeIsActive() && isRot ) {
+
+            kp = 0.2;
             double P = -(kp * (startAngle - getAngle()));
 
             setMtPower(P, P, P, P);
@@ -372,13 +500,81 @@ public class Robot2022 extends Robot {
 
             if (Math.signum(D) > Math.signum(P)) {  D=P; }
 
-            double kr = -0.0001;
+            double kr = -0.025;
             double Rele = kr * Math.signum(Er);
 
             ErLast = Er;
 
 
-            double pwf = P; //Регулятор
+            double pwf = P + Rele; //Регулятор
+
+
+            LB.setPower(pwf);
+            LF.setPower(pwf);
+            RB.setPower(pwf);
+            RF.setPower(pwf);
+
+                /*telemetry.addData("degrees", degrees);
+                telemetry.addData("getAngle()", getAngle());
+                telemetry.addData("Er (degrees - getAngle)", Er);
+                telemetry.addData("Er0", Er0);
+                telemetry.addData("kp", kp);
+                telemetry.addData("P", P);
+                telemetry.addData("D", D);
+                telemetry.addData("Rele", Rele);
+                telemetry.addData("pw", pw);
+                telemetry.addData("pwf", pwf);
+                telemetry.update();*/
+
+        }
+        LB.setPower(0);
+        LF.setPower(0);
+        RB.setPower(0);
+        RF.setPower(0);
+        delay(500);
+    }
+
+    void rotateS(double degrees) { //Функция автонома: поворот
+        double pw = 1;
+        double Er0 = -degrees;
+        double errorFix=0;
+        double ErLast = 0;
+        if (Er0 > 0) { pw = -1; }
+        degrees = getAngle() - degrees;
+        if (degrees < -180) {
+            //degrees += 360;
+            Er0 = Er0 * -1;
+            pw *= -1;
+            errorFix=1;
+        }
+        if (degrees > 180) {
+            //degrees -= 360;
+            Er0 = Er0 * -1;
+            pw *= -1;
+            errorFix=2;
+        }
+        while ( Math.abs(degrees - getAngle()) > 3  && L.opModeIsActive()) {
+            if (getAngle() > 0 && errorFix==1) { Er0 = Er0 * -1; degrees += 360; pw *= -1; errorFix=0; }
+            if (getAngle() < 0 && errorFix==2) { Er0 = Er0 * -1; degrees -= 360; pw *= -1; errorFix=0; }
+
+            double Er = degrees - (getAngle());
+
+            double kp = 0.4;
+            double P = kp * Er / Er0 * pw;
+
+            double kd = 0.1;
+            double ErD = Er - ErLast;
+            double D = kd * ErD * (1/Er);
+
+            if (Math.signum(D) > Math.signum(P)) {  D=P; }
+
+            double kr = -0.025;
+            double Rele = kr * Math.signum(Er);
+
+            ErLast = Er;
+
+
+            double pwf = P + Rele; //Регулятор
 
 
             LB.setPower(pwf);
@@ -457,7 +653,7 @@ public class Robot2022 extends Robot {
                         delay(300);
                     }
                     else {
-                        Power = 0.14;
+                        Power = 0.24;
                         hold = true;
                         delay(300);
                     }
@@ -489,8 +685,13 @@ public class Robot2022 extends Robot {
     //double servoPos=0.1;
     void servoController() {
         if (gamepad2.left_bumper ) {
-            KL.setPosition(0.05); }
+            KL.setPosition(0.4); }
         if (gamepad2.right_bumper) {
-            KL.setPosition(0.25); }
+            KL.setPosition(0.7); }
+    }
+
+    void liftUp() {
+        LT.setPower(0.6);
+        delay(1000);
     }
 }

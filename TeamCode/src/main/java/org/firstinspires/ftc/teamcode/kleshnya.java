@@ -17,9 +17,9 @@ public class kleshnya extends LinearOpMode {
         waitForStart();
 
         //okay, let's go!
-        R.KL.setPosition(0.3);
+        R.KL.setPosition(0.7);
         R.delay(4500);
-        R.KL.setPosition(0.1);
+        R.KL.setPosition(0.4);
         R.delay(1000);
 
     }

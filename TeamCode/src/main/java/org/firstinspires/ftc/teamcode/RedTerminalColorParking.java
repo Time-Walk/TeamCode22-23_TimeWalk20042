@@ -14,7 +14,7 @@ public class RedTerminalColorParking extends LinearOpMode {
         Robot2022 R = new Robot2022();
         R.initFields(telemetry, this, hardwareMap);
         R.init();
-        R.KL.setPosition(0.3);
+        R.KL.setPosition(0.7);
 
         while ( !isStarted() ) {
             R.MgI = 0;
@@ -40,7 +40,7 @@ public class RedTerminalColorParking extends LinearOpMode {
 
 
         waitForStart();
-        R.KL.setPosition(0.1);
+        R.KL.setPosition(0.4);
 
         //okay, let's go!
 
@@ -94,12 +94,12 @@ public class RedTerminalColorParking extends LinearOpMode {
         R.setMtPower(0.6, 0.6, -0.6, -0.6);
         R.delay(550);
         R.setMtPower(0, 0, 0, 0);
-        R.KL.setPosition(0.3);
+        R.KL.setPosition(0.7);
         R.delay(500);
         R.setMtPower(-0.4, -0.4, 0.4, 0.4);
         R.delay(450);
         R.setMtPower(0, 0, 0, 0);
-        R.KL.setPosition(0.1);
+        R.KL.setPosition(0.4);
         R.delay(150);
         R.setMtPower(-0.6, -0.6, 0.6, 0.6);
         R.delay(250);
@@ -117,11 +117,14 @@ public class RedTerminalColorParking extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Cn") {
-            R.go(170);
-            R.delay(150);
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(500);
+            R.delay(800);
             R.setMtPower(0, 0, 0, 0);
+            R.rotate(-90);
+            R.setMtPower(-0.6, -0.6, 0.6, 0.6);
+            R.delay(750);
+            R.setMtPower(0, 0, 0, 0);
+            R.KL.setPosition(0.7);
         }
         if (s == "Gr") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
@@ -134,9 +137,9 @@ public class RedTerminalColorParking extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
             R.rotate(90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
-            R.delay(750);
+            R.delay(800);
             R.setMtPower(0, 0, 0, 0);
-            R.KL.setPosition(0.3);
+            R.KL.setPosition(0.7);
         }
 
     }
