@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.vuforia.CameraDevice;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -34,6 +35,8 @@ public class Robot2022 extends Robot {
     Orientation angles;
     Acceleration gravity;
 
+    VoltageSensor vs;
+
     @Override
     void init() { //Инициализация:
 
@@ -50,6 +53,8 @@ public class Robot2022 extends Robot {
         LT.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         KL = hwmp.get(Servo.class, "KL");
+
+        vs = hwmp.voltageSensor.iterator().next();
 
         initVuforia();
 
@@ -188,7 +193,7 @@ public class Robot2022 extends Robot {
             double rotP =0;
 
             if ( Math.abs(startAngle - getAngle()) > 1 ) {
-                double rotkp = 0.03;
+                double rotkp = 0.026;
                 rotP = -(rotkp * (startAngle - getAngle()));
                 if ( direction == 1 ) {
                     rfr += rotP;
@@ -315,8 +320,8 @@ public class Robot2022 extends Robot {
             double rbr = 0;
             double rotP =0;
 
-            if ( Math.abs(startAngle - getAngle()) > 1 && isRot ) {
-                double rotkp = 0.03;
+            if ( Math.abs(startAngle - getAngle()) > 1 ) {
+                double rotkp = 0.026;
                 rotP = -(rotkp * (startAngle - getAngle()));
                 if ( direction == 1 ) {
                     rfr += rotP;
@@ -374,9 +379,9 @@ public class Robot2022 extends Robot {
 
         delay(500);
 
-        while ( Math.abs(startAngle - getAngle()) > 1  && L.opModeIsActive() && isRot ) {
+        while ( Math.abs(startAngle - getAngle()) > 1  && L.opModeIsActive()) {
 
-            kp = 0.2;
+            kp = 0.02;
             double P = -(kp * (startAngle - getAngle()));
 
             setMtPower(P, P, P, P);
@@ -500,7 +505,7 @@ public class Robot2022 extends Robot {
 
             if (Math.signum(D) > Math.signum(P)) {  D=P; }
 
-            double kr = -0.025;
+            double kr = -0.075;
             double Rele = kr * Math.signum(Er);
 
             ErLast = Er;
@@ -634,8 +639,8 @@ public class Robot2022 extends Robot {
             boolean hold = false;
             double Power = 0;
             while (L.opModeIsActive() && !L.isStopRequested()) {
-                telemetry.addData("y", gamepad2.left_stick_y);
-                telemetry.update();
+                //telemetry.addData("y", gamepad2.left_stick_y);
+                //telemetry.update();
                 LT.setPower((gamepad2.right_stick_y/-1.7)+Power); //Управление лифтом стиком
                 if (gamepad2.y) { //Поднять до конца
                     LT.setPower(0.75);  //начальное ускорение
@@ -668,6 +673,10 @@ public class Robot2022 extends Robot {
         LB.setPower(lb);
         RF.setPower(rf);
         RB.setPower(rb);
+    }
+
+    void setMtZero() {
+        setMtPower(0, 0, 0, 0);
     }
 
     int MgI = 0;

@@ -85,14 +85,14 @@ public class RedColorParking extends LinearOpMode {
 
         if (s == "Ns") {
             R.setMtPower(0.2, 0.2, -0.2, -0.2);
-            R.delay(400);
+            R.delay(450);
             R.setMtPower(-0.6, 0.6, -0.6, 0.6);
             R.delay(650);
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Cn") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(850);
             R.setMtPower(0, 0, 0, 0);
             R.rotate(-90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
@@ -102,16 +102,16 @@ public class RedColorParking extends LinearOpMode {
         }
         if (s == "Gr") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(850);
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Mg") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(850);
             R.setMtPower(0, 0, 0, 0);
             R.rotate(90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
-            R.delay(800);
+            R.delay(750);
             R.setMtPower(0, 0, 0, 0);
             R.KL.setPosition(0.7);
         }

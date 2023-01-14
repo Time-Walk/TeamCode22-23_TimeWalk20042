@@ -81,16 +81,20 @@ public class BlueColorParkingLeft extends LinearOpMode {
         telemetry.addData("Gr count", R.GrI);
         telemetry.addData("Cn count", R.CnI);
         telemetry.update();
-        R.delay(100);
+        R.delay(200);
+
+        R.LT.setPower(0.6);
+        R.delay(250);
+        R.LT.setPower(0.25);
 
         if (s == "Ns") {
-            R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.setMtPower(0.4, 0.4, -0.4, -0.4);
+            R.delay(1100);
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Cn") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(880);
             R.setMtPower(0, 0, 0, 0);
             R.rotate(-90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
@@ -100,16 +104,16 @@ public class BlueColorParkingLeft extends LinearOpMode {
         }
         if (s == "Gr") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(880);
             R.setMtPower(0, 0, 0, 0);
         }
         if (s == "Mg") {
             R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
+            R.delay(880);
             R.setMtPower(0, 0, 0, 0);
             R.rotate(90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
-            R.delay(750);
+            R.delay(850);
             R.setMtPower(0, 0, 0, 0);
             R.KL.setPosition(0.7);
         }

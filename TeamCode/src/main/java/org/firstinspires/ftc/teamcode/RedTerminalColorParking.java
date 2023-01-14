@@ -92,7 +92,7 @@ public class RedTerminalColorParking extends LinearOpMode {
         R.rotate(90);
         R.delay(150);
         R.setMtPower(0.6, 0.6, -0.6, -0.6);
-        R.delay(550);
+        R.delay(615);
         R.setMtPower(0, 0, 0, 0);
         R.KL.setPosition(0.7);
         R.delay(500);
@@ -137,7 +137,7 @@ public class RedTerminalColorParking extends LinearOpMode {
             R.setMtPower(0, 0, 0, 0);
             R.rotate(90);
             R.setMtPower(-0.6, -0.6, 0.6, 0.6);
-            R.delay(800);
+            R.delay(750);
             R.setMtPower(0, 0, 0, 0);
             R.KL.setPosition(0.7);
         }

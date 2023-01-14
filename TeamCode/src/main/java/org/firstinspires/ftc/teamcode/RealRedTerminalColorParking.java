@@ -89,10 +89,10 @@ public class RealRedTerminalColorParking extends LinearOpMode {
         R.delay(350);
         R.setMtPower(0, 0, 0, 0);
         R.delay(150);
-        R.rotate(-90);
+        R.rotateS(-90);
         R.delay(150);
         R.setMtPower(0.6, 0.6, -0.6, -0.6);
-        R.delay(550);
+        R.delay(615);
         R.setMtPower(0, 0, 0, 0);
         R.KL.setPosition(0.7);
         R.delay(500);

@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@Autonomous(name="СН-СПРВ: Парковка по цвету", group="blue")
-public class BlueColorParking extends LinearOpMode {
+@Autonomous(name="КР-СЛ-0: Терминал > Парковка по цвету", group="red")
+public class FixedRedTerminalParking extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -40,7 +40,6 @@ public class BlueColorParking extends LinearOpMode {
 
 
         waitForStart();
-
         R.KL.setPosition(0.4);
 
         //okay, let's go!
@@ -81,37 +80,75 @@ public class BlueColorParking extends LinearOpMode {
         telemetry.addData("Mg count", R.MgI);
         telemetry.addData("Gr count", R.GrI);
         telemetry.addData("Cn count", R.CnI);
+        telemetry.addData("SMACHNAYA", "PAPERDELINA");
         telemetry.update();
         R.delay(100);
 
+        if (s != "Mg" ) {
+            R.setMtPower(0.3, 0.3, -0.3, -0.3);
+            R.delay(300);
+            R.setMtZero();
+            R.delay(200);
+            R.rotate(-90);
+            R.delay(200);
+            R.Katet(60, 1);
+            R.KL.setPosition(0.7);
+            R.delay(1000);
+            R.Katet(50, 3);
+            R.KL.setPosition(0.4);
+            R.rotate(90);
+            R.setMtPower(-0.3, -0.3, 0.3, 0.3);
+            R.delay(800);
+            R.setMtZero();
+            R.delay(500);
+            R.setMtPower(0.3, 0.3, -0.3, -0.3);
+            R.delay(300);
+            R.setMtZero();
+            R.delay(200);
+        }
+
+
+
         if (s == "Ns") {
-            R.setMtPower(0.2, 0.2, -0.2, -0.2);
-            R.delay(450);
-            R.setMtPower(0.6, -0.6, 0.6, -0.6);
-            R.delay(650);
-            R.setMtPower(0, 0, 0, 0);
+            R.Katet(50, 4);
         }
         if (s == "Cn") {
-            R.go(170);//ГИПОТЕНУЗА Паша забыл подарок для дениса 14/88
-            R.delay(150);
-            R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(500);
-            R.setMtPower(0, 0, 0, 0);
+            R.Katet(60, 2);
+            R.delay(200);
+            R.Katet(80, 1);
         }
         if (s == "Gr") {
-            R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(800);
-            R.setMtPower(0, 0, 0, 0);
+            R.Katet(80, 1);
         }
         if (s == "Mg") {
-            R.setMtPower(0.6, 0.6, -0.6, -0.6);
-            R.delay(850);
-            R.setMtPower(0, 0, 0, 0);
+            R.setMtPower(0.3, 0.3, -0.3, -0.3);
+            R.delay(200);
+            R.setMtZero();
+            R.delay(300);
+            R.katetPlus(155, 4, 0.5, 0.15, true);
+            R.delay(200);
+            R.setMtPower(-0.3, -0.3, 0.3, 0.3);
+            R.delay(400);
+            R.setMtZero();
+            R.delay(200);
+            R.katetPlus(30, 1, 0.8, 0.2, true);
+            R.delay(200);
+            R.katetPlus(30, 4, 0.4, 0, false);
+            R.delay(200);
+            R.katetPlus(30, 1, 0.8, 0.2, true);
+            R.delay(200);
+            R.rotateS(90);
+            R.delay(400);
             R.rotate(90);
-            R.setMtPower(-0.6, -0.6, 0.6, 0.6);
-            R.delay(750);
-            R.setMtPower(0, 0, 0, 0);
+            R.delay(200);
+            R.Katet(20, 1);
+            R.delay(200);
             R.KL.setPosition(0.7);
+            R.delay(500);
+            R.Katet(70, 3);
+            R.delay(400);
+            R.KL.setPosition(0.4);
+            R.delay(500);
         }
 
     }
